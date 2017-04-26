@@ -15,17 +15,26 @@ import puissance4.Plateau;
 public class JPlateau extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Plateau plateau;
-	private Fenetre fenetre;
+	//private Fenetre fenetre;
+	/**
+	 * largeur par défaut du composant
+	 */
 	private static int XPREF= 700;
+	/**
+	 * hauteur par défaut du composant
+	 */
 	private static int YPREF = 700;
+	/**
+	 * Couleur de l'arrière du plateau
+	 */
 	private static Color BACKGROUNDCOLOR = Color.BLUE;
 	
 	/** 
 	 * constructeur de la classe
 	 * on fixe la taille par défaut de l'affichage
 	 */
-	public JPlateau(Fenetre fen){
-		fenetre = fen;
+	public JPlateau(Plateau plat){
+		this.plateau = plat;
 		this.setPreferredSize(new Dimension(XPREF,YPREF));
 	}
 
@@ -51,7 +60,7 @@ public class JPlateau extends JPanel {
 	public void paintCase(Graphics g, int i, int j){
 		int pasx =(int) this.getSize().getWidth()/7;
 		int pasy =(int) this.getSize().getHeight()/7;
-		g.setColor(plateau.getCase(i, j).getCouleur());
+		//g.setColor(plateau.getCase(i, j).getCouleur());[TODO]
 		g.fillOval(i*(pasx-1), j*(pasy-1), pasx, pasy);
 	}
 }

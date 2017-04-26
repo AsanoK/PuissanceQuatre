@@ -40,4 +40,5 @@ public Joueur(){
 		couleur = COULEURDEUX;
 	}else couleur = COULEURDEF;
 }
+public void joue(Plateau plateau) {}
 }
