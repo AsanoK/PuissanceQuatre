@@ -17,14 +17,6 @@ public class JPlateau extends JPanel {
 	private Plateau plateau;
 	//private Fenetre fenetre;
 	/**
-	 * largeur par défaut du composant
-	 */
-	private static int XPREF= 700;
-	/**
-	 * hauteur par défaut du composant
-	 */
-	private static int YPREF = 700;
-	/**
 	 * Couleur de l'arrière du plateau
 	 */
 	private static Color BACKGROUNDCOLOR = Color.BLUE;
@@ -35,7 +27,7 @@ public class JPlateau extends JPanel {
 	 */
 	public JPlateau(Plateau plat){
 		this.plateau = plat;
-		this.setPreferredSize(new Dimension(XPREF,YPREF));
+		this.setPreferredSize(new Dimension(Fenetre.XPREF,Fenetre.YPLAT));
 	}
 
 	/**
@@ -58,9 +50,17 @@ public class JPlateau extends JPanel {
 	 * @param j: l'indice en y de la case (par rapport au plateau, pas en pixel)
 	 */
 	public void paintCase(Graphics g, int i, int j){
-		int pasx =(int) this.getSize().getWidth()/7;
-		int pasy =(int) this.getSize().getHeight()/7;
-		//g.setColor(plateau.getCase(i, j).getCouleur());[TODO]
-		g.fillOval(i*(pasx-1), j*(pasy-1), pasx, pasy);
+		int pasx =Fenetre.pasX;
+		int pasy =Fenetre.pasY;
+		Color couleur;
+		if(plateau.getPlateau()[i][j]==Plateau.VIDE){
+			couleur = Color.white;
+		}else if(plateau.getPlateau()[i][j]==Plateau.BLEU){
+			couleur = Color.RED;
+		} else if(plateau.getPlateau()[i][j]==Plateau.ORANGE){
+			couleur = Color.orange;
+		}else couleur = Color.BLACK;
+		g.setColor(couleur);
+		g.fillOval(i*(pasx-1)+5, j*(pasy-1)+5, pasx-5, pasy-5);
 	}
 }

@@ -7,6 +7,7 @@ package puissance4;
  */
 public class Plateau {
 
+
 public final static int VIDE = 0;
 public final static int BLEU = 1;
 public final static int ORANGE = 2;
@@ -16,29 +17,30 @@ private int[][] plateau;
 
 public Plateau(){
 	plateau = new int[7][6];
-    for (int col = 0; col < 6 ; col++) {
-      for (int ligne = 0; ligne < 7; ligne++) {
+    for (int col = 0; col < 7 ; col++) {
+      for (int ligne = 0; ligne < 6; ligne++) {
         plateau[col][ligne] = VIDE;
       }
     }
 }
+
 public boolean victoire() {
 	    // Vérifie les horizontales
-	    for (int ligne = 0; ligne < 7; ligne++) {
+	    for (int ligne = 0; ligne < 6; ligne++) {
 	      if (verifierpions(0, ligne, 1, 0)) {
 	        return true;
 	      }
 	    }
 
 	    // Vérifie les verticales 
-	    for (int col = 0; col < 6; col++) {
+	    for (int col = 0; col < 7; col++) {
 	      if (verifierpions(col, 0, 0, 1)) {
 	        return true;
 	      }
 	    }
 
 	    // Diagonales (cherche depuis la ligne du bas)
-	    for (int col = 0; col < 6; col++) {
+	    for (int col = 0; col < 7; col++) {
 	      // Diagonale de gauche à droite ( / )
 	      if (verifierpions(col, 0, 1, 1)) {
 	        return true;
@@ -50,7 +52,7 @@ public boolean victoire() {
 	    }
 
 	    // Diagonales (cherche depuis les colonnes gauches et droites)
-	    for (int ligne = 0; ligne < 7; ligne++) {
+	    for (int ligne = 0; ligne < 6; ligne++) {
 	      //Diagonale de gauche à droite ( / )
 	      if (verifierpions(0, ligne, 1, 1)) {
 	        return true;
@@ -117,8 +119,8 @@ public boolean victoire() {
 	   **/
 	  public boolean PlateauPlein() {
 	    // On cherche une case vide. S'il n'y en a plus, le plateau  est plein
-	    for (int col = 0; col < 6; col++) {
-	      for (int ligne = 0; ligne < 7; ligne++) {
+	    for (int col = 0; col < 7; col++) {
+	      for (int ligne = 0; ligne < 6; ligne++) {
 	        if (plateau[col][ligne] == VIDE) {
 	          return false;
 	        }
@@ -135,13 +137,16 @@ public void jouer(int j, int col){
 		effectuer(j,col);
 	}
 }
+public int[][] getPlateau() {
+	return plateau;
+}
 private boolean verifier(int col){
-	if ((col < 0) || (col >= 6)){
+	if ((col < 0) || (col >= 7)){
 	return false;}
 	return true;
 }
 private boolean effectuer(int j, int col){
-	for (int ligne = 0; ligne < 7; ligne++) {
+	for (int ligne = 0; ligne < 6; ligne++) {
 	      if (plateau[col][ligne] == VIDE) {
 	        plateau[col][ligne] = j;
 	        return true;

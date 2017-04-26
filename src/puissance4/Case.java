@@ -6,6 +6,7 @@ import java.awt.Color;
  * @author Hugin
  *
  */
+@Deprecated
 public class Case {
 private Color couleur;
 
