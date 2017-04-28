@@ -3,7 +3,6 @@ package puissance4;
  * Déroulement de jeu.
  * Classe qui faire fonctionner le Jeu sous forme de plateau + 2 joueurs
  * @author Hugin
- *
  */
 public class Jeu {
 private Joueur[] joueurs = new Joueur[2];
