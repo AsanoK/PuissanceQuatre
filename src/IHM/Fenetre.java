@@ -50,15 +50,18 @@ public class Fenetre extends JFrame {
 	 * constructeur de la classe fenetre
 	 */
 	public Fenetre(Plateau p){
+		super("puissance quatre");
 		plateau = p;
 		initComponent();
 		this.pack();
 		this.setVisible(true);
 	}
+	
 	/**
 	 * initialisation des composants graphiques de la fenêtre
 	 */
 	private void initComponent(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jplateau = new JPlateau(plateau);
 		this.setLayout(new BorderLayout());
 		// plateau, au centre
@@ -69,7 +72,7 @@ public class Fenetre extends JFrame {
 		for (int i = 0;i<7;i++){
 			BoutonColonne bouton= new BoutonColonne(Integer.toString(i+1),i);
 			bouton.setPreferredSize(new Dimension(pasX, MARGEY));
-			//ajouter un listener au bouton
+			//TODO : ajouter un listener au bouton
 			boutons.add(bouton);
 		}
 		this.add(boutons, BorderLayout.NORTH);

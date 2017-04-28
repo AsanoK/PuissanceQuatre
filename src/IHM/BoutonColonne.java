@@ -1,7 +1,11 @@
 package IHM;
 
 import javax.swing.JButton;
-
+/**
+ * Classe des boutons permettant de sélectionner une colonne du plateau dans laquelle jouer
+ * @author Hugin
+ *
+ */
 public class BoutonColonne extends JButton {
 
 	/**

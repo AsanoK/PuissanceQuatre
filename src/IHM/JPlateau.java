@@ -13,6 +13,10 @@ import puissance4.Plateau;
  *
  */
 public class JPlateau extends JPanel {
+	private static Color VIDE = Color.white;
+	private static Color JOUEUR1 = Color.red;
+	private static Color JOUEUR2 = Color.orange;
+	private static Color COLDEF = Color.black;
 	private static final long serialVersionUID = 1L;
 	private Plateau plateau;
 	//private Fenetre fenetre;
@@ -54,12 +58,12 @@ public class JPlateau extends JPanel {
 		int pasy =Fenetre.pasY;
 		Color couleur;
 		if(plateau.getPlateau()[i][j]==Plateau.VIDE){
-			couleur = Color.white;
+			couleur = VIDE;
 		}else if(plateau.getPlateau()[i][j]==Plateau.BLEU){
-			couleur = Color.RED;
+			couleur = JOUEUR1;
 		} else if(plateau.getPlateau()[i][j]==Plateau.ORANGE){
-			couleur = Color.orange;
-		}else couleur = Color.BLACK;
+			couleur = JOUEUR2;
+		}else couleur = COLDEF;
 		g.setColor(couleur);
 		g.fillOval(i*(pasx-1)+5, j*(pasy-1)+5, pasx-5, pasy-5);
 	}
