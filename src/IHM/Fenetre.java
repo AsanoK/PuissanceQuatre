@@ -2,11 +2,14 @@ package IHM;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import puissance4.Jeu;
+import puissance4.Joueur;
 import puissance4.Plateau;
 /**
  * classe représentant la fenêtre dans son ensemble : le plateau de jeu, mais aussi tous ce qui est autour
@@ -19,8 +22,27 @@ public class Fenetre extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * panneau d'information latéral
+	 */
+	private PInfos infos;
+	/**
+	 * le plateau dont dépend la fenêtre
+	 */
+	
 	private Plateau plateau;
+	/**
+	 * le panel central, dans lequel s'affiche le plateau
+	 */
 	private JPlateau jplateau;
+	/**
+	 * joueur dont c'est le tour
+	 */
+	private Joueur joueuractif;
+	/**
+	 * partie dont dépend la fenêtre
+	 */
+	private Jeu partie;
 	/**
 	 * marge laissée par défaut aux bandeaux en haut et en bas du plateau
 	 */
@@ -45,10 +67,23 @@ public class Fenetre extends JFrame {
 	 * subdivion de référence en hauteur
 	 */
 	public static int pasY = (YPREF-2*MARGEY)/6;
-	
 	/**
-	 * constructeur de la classe fenetre
+	 * Constructeur de la classe fenêtre
+	 * @param p la partie dont dépend la fenêtre
 	 */
+	public Fenetre (Jeu p){
+		super("puissance quatre");
+		plateau = p.getPlateau();
+		partie = p;
+		joueuractif = p.getJoueurs()[0];
+		initComponent();
+		this.pack();
+		this.setVisible(true);
+	}
+	/**
+	 * constructeur de la classe fenetre, deprecated car il faut une partie
+	 */
+	@Deprecated
 	public Fenetre(Plateau p){
 		super("puissance quatre");
 		plateau = p;
@@ -56,7 +91,20 @@ public class Fenetre extends JFrame {
 		this.pack();
 		this.setVisible(true);
 	}
-	
+	public Jeu getPartie(){
+		return partie;
+	}
+	public Joueur getJoueuractif() {
+		return joueuractif;
+	}
+
+	public void setJoueuractif(Joueur joueuractif) {
+		this.joueuractif = joueuractif;
+	}
+
+	public void setPlateau(Plateau plateau) {
+		this.plateau = plateau;
+	}
 	/**
 	 * initialisation des composants graphiques de la fenêtre
 	 */
@@ -76,7 +124,9 @@ public class Fenetre extends JFrame {
 			boutons.add(bouton);
 		}
 		this.add(boutons, BorderLayout.NORTH);
-		//informations diverses, en bas?
+		//informations diverses, en bas
+		infos = new PInfos(this);
+		this.add(infos, BorderLayout.SOUTH);
 		
 	}
 	public JPlateau getJPlateau() {

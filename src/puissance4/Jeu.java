@@ -14,6 +14,14 @@ public Jeu(Joueur joueur1, Joueur joueur2) {
 	    plateau = new Plateau();
 }
 
+public Joueur[] getJoueurs() {
+	return joueurs;
+}
+
+public Plateau getPlateau() {
+	return plateau;
+}
+
 public void joue() {
 	    boolean gagner = false;
 	    int cJoueur = 0;

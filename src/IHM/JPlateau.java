@@ -54,8 +54,8 @@ public class JPlateau extends JPanel {
 	 * @param j: l'indice en y de la case (par rapport au plateau, pas en pixel)
 	 */
 	public void paintCase(Graphics g, int i, int j){
-		int pasx =Fenetre.pasX;
-		int pasy =Fenetre.pasY;
+		int pasx = this.getWidth()/7;
+		int pasy =this.getHeight()/6;
 		Color couleur;
 		if(plateau.getPlateau()[i][j]==Plateau.VIDE){
 			couleur = VIDE;
