@@ -16,7 +16,14 @@ public final static int ORANGE = 2;
 	
 private int[][] plateau;
 
-
+public Plateau (Plateau p){
+	plateau = new int[7][6];
+    for (int col = 0; col < 7 ; col++) {
+      for (int ligne = 0; ligne < 6; ligne++) {
+        plateau[col][ligne] = p.getPlateau()[col][ligne];
+      }
+    }
+}
 public Plateau(){
 	plateau = new int[7][6];
     for (int col = 0; col < 7 ; col++) {
