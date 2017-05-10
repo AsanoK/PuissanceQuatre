@@ -1,5 +1,8 @@
 package IHM;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 /**
  * Classe des boutons permettant de sélectionner une colonne du plateau dans laquelle jouer
@@ -19,6 +22,7 @@ public static long getSerialversionuid() {
 public int getNumero() {
 	return numero;
 }
+
 public BoutonColonne(String t,int i){
 	super(t);
 	numero = i;

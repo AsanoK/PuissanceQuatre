@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import puissance4.Jeu;
@@ -81,12 +84,15 @@ public class Fenetre extends JFrame {
 		this.setVisible(true);
 	}
 	/**
-	 * constructeur de la classe fenetre, deprecated car il faut une partie
+	 * constructeur de la classe fenetre, utilisée pour des tests
 	 */
-	@Deprecated
+	
 	public Fenetre(Plateau p){
 		super("puissance quatre");
 		plateau = p;
+		partie = new Jeu(new Joueur(), new Joueur());
+		joueuractif = partie.getJoueurs()[0];
+		partie.setPlateau(plateau);
 		initComponent();
 		this.pack();
 		this.setVisible(true);
@@ -118,9 +124,10 @@ public class Fenetre extends JFrame {
 		JPanel boutons = new JPanel();
 		boutons.setLayout(new GridLayout(1,7));
 		for (int i = 0;i<7;i++){
+			// on affiche les boutons avec le numéro normal, mais le bouton garde le numéro "tableau" i
 			BoutonColonne bouton= new BoutonColonne(Integer.toString(i+1),i);
 			bouton.setPreferredSize(new Dimension(pasX, MARGEY));
-			//TODO : ajouter un listener au bouton
+			bouton.addActionListener(new ActionBouton(bouton, this));
 			boutons.add(bouton);
 		}
 		this.add(boutons, BorderLayout.NORTH);
@@ -129,7 +136,45 @@ public class Fenetre extends JFrame {
 		this.add(infos, BorderLayout.SOUTH);
 		
 	}
+	public Plateau getPlateau() {
+		return plateau;
+	}
 	public JPlateau getJPlateau() {
 		return jplateau;
 	}
+	public PInfos getInfos() {
+		return infos;
+	}
+	
+}
+class ActionBouton implements ActionListener{
+	private BoutonColonne bouton;
+	private Fenetre fen;
+	ActionBouton(BoutonColonne b, Fenetre f){
+		super();
+		bouton = b;
+		fen = f;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int j = 1;
+		//System.out.println("test");
+		if(fen.getJoueuractif().equals(fen.getPartie().getJoueurs()[1])){
+			j = 2;
+		}
+		fen.getPartie().getPlateau().jouer(j, bouton.getNumero());
+		fen.repaint();
+		if(fen.getPlateau().victoire()){
+			JOptionPane.showMessageDialog(fen, "victoire du joueur " + j);
+			System.exit(0);
+		}
+		if(fen.getJoueuractif().equals(fen.getPartie().getJoueurs()[1])){
+			fen.setJoueuractif(fen.getPartie().getJoueurs()[0]);
+		}else fen.setJoueuractif(fen.getPartie().getJoueurs()[1]);
+		fen.repaint();
+		fen.getInfos().getJoueur().setBackground(fen.getJoueuractif().getCouleur());
+		fen.getInfos().repaint();
+	}
+	
+	
 }

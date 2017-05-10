@@ -1,12 +1,14 @@
 package puissance4;
+
+import javax.swing.JOptionPane;
+
 /**
- * Plateau de jeu.
+ * Plateau de jeu qui est une matrix de taille [7][6] de Integer
  * Classe abstraite qui sera divisée entre plateau à 1 ou 2 joueurs
  * @author Hugin
  *
  */
 public class Plateau {
-
 
 public final static int VIDE = 0;
 public final static int BLEU = 1;
@@ -24,6 +26,9 @@ public Plateau(){
     }
 }
 
+/**
+ * Condition gagnante pour terminer le jeu. Il s'agit de vérifier si nous avons 4 pions alignés verticalement, horizontalement ou diagonalement (/ ou \)
+*/  	
 public boolean victoire() {
 	    // Vérifie les horizontales
 	    for (int ligne = 0; ligne < 6; ligne++) {
@@ -58,7 +63,7 @@ public boolean victoire() {
 	        return true;
 	      }
 	      // Diagonale de droite à gauche ( \ )
-	      if (verifierpions(5, ligne, -1, 1)) {
+	      if (verifierpions(6, ligne, -1, 1)) {
 	        return true;
 	      }
 	    }
@@ -67,22 +72,19 @@ public boolean victoire() {
 	    return false;
 	  }
 
-	  /**
-	    Cette méthode cherche 4 pions alignés sur une ligne. Cette ligne est définie par
-	    le point de départ, ou origine de coordonnées (oCol,oLigne), et par le déplacement
-	    delta (dCol,dLigne). En utilisant des valeurs appropriées pour dCol et dLigne
-	    on peut vérifier toutes les directions:
-	   - horizontale:    dCol = 0, dLigne = 1
-	   - vérticale  :    dCol = 1, dLigne = 0
-	   - Diagonale /: dCol = 1, dLigne = 1
-	   - Diagonale \: dCol = 1, dLigne = -1
-	   *
-	   * @param oCol   Colonne d'origine de la recherche
-	   * @param oLigne Ligne d'origine de la recherche
-	   * @param dCol   Direction de déplacement sur une colonne
-	   * @param dLigne Direction de déplacement sur une ligne
-	   * @return true si on trouve un alignement
-	   */
+public int[][] getPlateau() {
+	return plateau;
+}
+
+/**
+Cette fonction sert à trouver un alignement de 4 pions. Elle retourne le booléen 	    en prenant comme entrée:  
+les coordonnées du point de départ(oCol,oLigne), et par le déplacement
+delta (dCol,dLigne). En utilisant des valeurs appropriées pour dCol et dLigne on peut vérifier toutes les directions:
+	- horizontale:    dCol = 1, dLigne = 0
+	- vérticale  :    dCol = 0, dLigne = 1
+	- Diagonale /:    dCol = 1, dLigne = 1
+	- Diagonale \:    dCol = -1, dLigne = 1
+*/
 	  private boolean verifierpions(int oCol, int oLigne, int dCol, int dLigne) {
 	    int couleur = VIDE;
 	    int compteur = 0;
@@ -90,10 +92,10 @@ public boolean victoire() {
 	    int curCol = oCol;
 	    int curRow = oLigne;
 
-	    while ((curCol >= 0) && (curCol < 6) && (curRow >= 0) && (curRow < 7)) {
-	      if (plateau[curRow][curCol] != couleur) {
+	    while ((curCol >= 0) && (curCol <= 6) && (curRow >= 0) && (curRow < 6)) {
+	      if (plateau[curCol][curRow] != couleur) {
 	        // Si la couleur change, on réinitialise le compteur
-	        couleur = plateau[curRow][curCol];
+	        couleur = plateau[curCol][curRow];
 	        compteur = 1;
 	      } else {
 	        // Sinon on l'incrémente
@@ -114,12 +116,11 @@ public boolean victoire() {
 	    return false;
 	  }
 
-	  /**
-	   * Vérifie s'il est encore possible de placer des pions
-	   **/
+/**
+* Vérifie s'il est encore possible de placer des pions. On cherche une case vide. S'il n'y en a plus, le plateau  est plein
+**/
 	  public boolean PlateauPlein() {
-	    // On cherche une case vide. S'il n'y en a plus, le plateau  est plein
-	    for (int col = 0; col < 7; col++) {
+	    	    for (int col = 0; col < 7; col++) {
 	      for (int ligne = 0; ligne < 6; ligne++) {
 	        if (plateau[col][ligne] == VIDE) {
 	          return false;
@@ -130,28 +131,43 @@ public boolean victoire() {
 	    return true;
 	  }
 
+/**
+* Joue un coup après avoir vérifier le plateau et le coup du joueur
+**/
 
-
-public void jouer(int j, int col){
-	if(verifier(col)==true){
-		effectuer(j,col);
+	public void jouer(int j, int col){
+		if(verifier(col)==true){
+			boolean overflow = effectuer(j,col);
+			if(overflow==false){
+				JOptionPane.showMessageDialog(null, "la colonne est déjà remplie");
+			}
+		}
+		/*if(victoire()){
+			JOptionPane.showMessageDialog(null, "victoire!");
+			System.exit(0);
+		}*/
 	}
-}
-public int[][] getPlateau() {
-	return plateau;
-}
-private boolean verifier(int col){
-	if ((col < 0) || (col >= 7)){
-	return false;}
-	return true;
-}
-private boolean effectuer(int j, int col){
-	for (int ligne = 0; ligne < 6; ligne++) {
-	      if (plateau[col][ligne] == VIDE) {
-	        plateau[col][ligne] = j;
-	        return true;
-	      }
-}
-	return false;
-}
+
+/**
+* Vérifie si le joueur mettre les bons paramètres (facultatif)
+**/	
+	
+	private boolean verifier(int col){
+		if ((col < 0) || (col > 6)){
+		return false;}
+		return true;
+	}
+
+/**
+* Vérifie si le coup du joueur est faisable et l'effectuer
+**/
+	private boolean effectuer(int j, int col){
+		for (int ligne = 0; ligne < 6; ligne++) {
+		      if (plateau[col][ligne] == VIDE) {
+		        plateau[col][ligne] = j;
+		        return true;
+		      }
+		}
+		return false;
+	}
 }

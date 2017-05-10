@@ -7,7 +7,7 @@ package puissance4;
 public class Jeu {
 private Joueur[] joueurs = new Joueur[2];
 private Plateau plateau;
-
+private Joueur joueurActif;
 public Jeu(Joueur joueur1, Joueur joueur2) {
 	    joueurs[0] = joueur1;
 	    joueurs[1] = joueur2;
@@ -20,6 +20,9 @@ public Joueur[] getJoueurs() {
 
 public Plateau getPlateau() {
 	return plateau;
+}
+public void setPlateau(Plateau plat){
+	plateau = plat;
 }
 
 public void joue() {

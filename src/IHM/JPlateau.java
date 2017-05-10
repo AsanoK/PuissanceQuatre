@@ -19,6 +19,9 @@ public class JPlateau extends JPanel {
 	private static Color COLDEF = Color.black;
 	private static final long serialVersionUID = 1L;
 	private Plateau plateau;
+	public Plateau getPlateau() {
+		return plateau;
+	}
 	//private Fenetre fenetre;
 	/**
 	 * Couleur de l'arrière du plateau
@@ -65,6 +68,6 @@ public class JPlateau extends JPanel {
 			couleur = JOUEUR2;
 		}else couleur = COLDEF;
 		g.setColor(couleur);
-		g.fillOval(i*(pasx-1)+5, j*(pasy-1)+5, pasx-5, pasy-5);
+		g.fillOval(i*(pasx-1)+5, (5-j)*(pasy-1)+5, pasx-5, pasy-5);
 	}
 }
