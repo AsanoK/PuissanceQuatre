@@ -177,7 +177,11 @@ delta (dCol,dLigne). En utilisant des valeurs appropriées pour dCol et dLigne on
 		}
 		return false;
 	}
-
+/**
+ * Méthode indiquant la hauteur totale d'une colonne
+ * @param i la colonne dont on veut obtenir la hauteur
+ * @return la hauteur de la colonne
+ */
 public int hauteurColonne(int i){
 		int h = 0;
 		for (int j = 0; j<6;j++){
@@ -187,4 +191,94 @@ public int hauteurColonne(int i){
 		}
 		return h;
 	}
+/**
+ * méthode pour compter l'alignement de pions verticaux en i,j
+ * @param i colonne visée
+ * @param j rangée visée
+ * @return le nombre total de pions alignés.
+ */
+public int nbPionsVerticaux(int i, int j){
+	int total = 0;
+	int k = j;
+	int caseDepart =plateau[i][j];
+	while(k>0&&caseDepart==plateau[i][k]){
+		total++;
+		k--;
+	}
+	k = j;
+	while(k<6&&caseDepart==plateau[i][k]){
+		total++;
+		k++;
+	}
+	return total;
+}
+/**
+ * méthode pour compter l'alignement de pions horizontaux en i,j
+ * @param i colonne visée
+ * @param j rangée visée
+ * @return le nombre total de pions alignés.
+ */
+public int nbPionsHorizontaux(int i, int j){
+	int total = 0;
+	int k = i;
+	int caseDepart = plateau[i][j];
+	while(k>0&&caseDepart==plateau[k][j]){
+		total++;
+		k--;
+	}
+	k = j;
+	while(k<7&&caseDepart==plateau[k][j]){
+		total++;
+		k++;
+	}
+	return total;
+}
+/**
+ * méthode pour compter l'alignement de pions dans la diagonale de gauche à droite en i,j
+ * @param i colonne visée
+ * @param j rangée visée
+ * @return le nombre total de pions alignés.
+ */
+public int nbPionsDiagGaD(int i, int j){
+	int total = 0;
+	int k = i;
+	int l = j;
+	int caseDepart = plateau[i][j];
+	while(k>0&&caseDepart==plateau[k][l]&&l<6){
+		total++;
+		k--;
+		l++;
+	}
+	k = j;
+	while(k<7&&caseDepart==plateau[k][l]&&l>0){
+		total++;
+		k++;
+		l--;
+	}
+	return total;
+}
+/**
+ * méthode pour compter l'alignement de pions dans la diagonale de droite à gauche en i,j
+ * @param i colonne visée
+ * @param j rangée visée
+ * @return le nombre total de pions alignés.
+ */
+public int nbPionsDiagDaG(int i, int j){
+	int total = 0;
+	int k = i;
+	int l = j;
+	int caseDepart = plateau[i][j];
+	while(k<7&&caseDepart==plateau[k][l]&&l<6){
+		total++;
+		k++;
+		l++;
+	}
+	k = j;
+	while(k>0&&caseDepart==plateau[k][l]&&l>0){
+		total++;
+		k--;
+		l--;
+	}
+	return total;
+}
 }

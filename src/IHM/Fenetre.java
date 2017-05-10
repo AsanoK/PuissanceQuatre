@@ -78,7 +78,7 @@ public class Fenetre extends JFrame {
 		super("puissance quatre");
 		plateau = p.getPlateau();
 		partie = p;
-		joueuractif = p.getJoueurs()[0];
+		joueuractif = p.getJoueurActif();
 		initComponent();
 		this.pack();
 		this.setVisible(true);
@@ -147,8 +147,19 @@ public class Fenetre extends JFrame {
 	}
 	
 }
+/**
+ * Classe gérant les boutons de choix de colonne
+ * @author Hugin
+ *
+ */
 class ActionBouton implements ActionListener{
+	/**
+	 * le bouton auquel est lié le listener
+	 */
 	private BoutonColonne bouton;
+	/**
+	 * fenêtre à laquelle le bouton est lié.
+	 */
 	private Fenetre fen;
 	ActionBouton(BoutonColonne b, Fenetre f){
 		super();
@@ -156,7 +167,35 @@ class ActionBouton implements ActionListener{
 		fen = f;
 	}
 	@Override
+	/**
+	 * Méthode définissant ce qui se passe après l'activation d'un des boutons de colonne
+	 * On joue le coup demandé, puis si besoin, on change le joueur actif, on met à jour l'affichage et l'éventuel panneau de victoire
+	 */
 	public void actionPerformed(ActionEvent e) {
+		//on récupère le numéro du joueur actif, qui sera utilisé pour affichage et métier
+		int j = fen.getPartie().getNumero(fen.getJoueuractif());
+		//on récupère la colonne jouée
+		int col = bouton.getNumero();
+		//on garde en mémoire pour comparaison la taille de la colonne avant jeu
+		int valeurPrec = fen.getPartie().getPlateau().hauteurColonne(col);
+		//on joue le coup demandé
+		fen.getPartie().getPlateau().jouer(j, col);
+		//si le coup est joué, on continue
+		if(fen.getPartie().getPlateau().hauteurColonne(col)!=valeurPrec||valeurPrec==0){
+			//mise à jour de l'affichage
+			fen.repaint();
+			//panneau de victoire au cas où
+			if(fen.getPlateau().victoire()){
+				JOptionPane.showMessageDialog(fen, "victoire du joueur " + j);
+				System.exit(0);
+			}
+			//changement du joueur actif
+			fen.setJoueuractif(fen.getPartie().getAutreJoueur(fen.getJoueuractif()));
+			//mise à joura fficahge
+			fen.repaint();
+		}
+	}
+	/*public void actionPerformed(ActionEvent e) {
 		int j = 1;
 		//System.out.println("test");
 		if(fen.getJoueuractif().equals(fen.getPartie().getJoueurs()[1])){
@@ -174,7 +213,7 @@ class ActionBouton implements ActionListener{
 		fen.repaint();
 		fen.getInfos().getJoueur().setBackground(fen.getJoueuractif().getCouleur());
 		fen.getInfos().repaint();
-	}
+	}*/
 	
 	
 }

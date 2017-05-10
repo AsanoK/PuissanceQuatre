@@ -14,10 +14,26 @@ public Jeu(Joueur joueur1, Joueur joueur2) {
 	    joueurActif = joueurs[0];
 	    plateau = new Plateau();
 }
-
+/**
+ * méthode pour obtenir le numéro d'un joueur (utilisé pour ses pions par exemple)
+ * @param j le joueur visé
+ * @return son numéro
+ */
+public int getNumero(Joueur j){
+	int ret =1;
+	if(j.equals(joueurs[1])){
+		ret = 2;
+	}
+	return ret;
+}
 public Joueur[] getJoueurs() {
 	return joueurs;
 }
+/**
+ * Permet d'obtenir le joueur qui n'est pas celui qu'on a
+ * @param j un joueur dont on dispose
+ * @return l'autre joueur
+ */
 public Joueur getAutreJoueur(Joueur j){
 	if(j.equals(joueurs[0])){
 		return joueurs[1];
