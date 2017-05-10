@@ -11,11 +11,21 @@ private Joueur joueurActif;
 public Jeu(Joueur joueur1, Joueur joueur2) {
 	    joueurs[0] = joueur1;
 	    joueurs[1] = joueur2;
+	    joueurActif = joueurs[0];
 	    plateau = new Plateau();
 }
 
 public Joueur[] getJoueurs() {
 	return joueurs;
+}
+public Joueur getAutreJoueur(Joueur j){
+	if(j.equals(joueurs[0])){
+		return joueurs[1];
+	}else return joueurs[0];
+	
+}
+public Joueur getJoueurActif() {
+	return joueurActif;
 }
 
 public Plateau getPlateau() {

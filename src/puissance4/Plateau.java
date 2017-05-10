@@ -177,4 +177,14 @@ delta (dCol,dLigne). En utilisant des valeurs appropriées pour dCol et dLigne on
 		}
 		return false;
 	}
+
+public int hauteurColonne(int i){
+		int h = 0;
+		for (int j = 0; j<6;j++){
+			if(plateau[i][j]!=0){
+				h=j;
+			}
+		}
+		return h;
+	}
 }
