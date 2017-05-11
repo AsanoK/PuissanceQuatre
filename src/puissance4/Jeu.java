@@ -8,11 +8,29 @@ public class Jeu {
 private Joueur[] joueurs = new Joueur[2];
 private Plateau plateau;
 private Joueur joueurActif;
+private boolean IA;
+private static int PROFONDEUR = 7;
+public boolean partieSolo(){
+	return IA;
+}
+public IA getIA(){
+	if(IA){
+		return (IA)joueurs[1];
+	}else return null;
+}
 public Jeu(Joueur joueur1, Joueur joueur2) {
 	    joueurs[0] = joueur1;
 	    joueurs[1] = joueur2;
 	    joueurActif = joueurs[0];
 	    plateau = new Plateau();
+	    IA = false;
+}
+public Jeu(Joueur joueur1){
+	joueurs[0] = joueur1;
+	IA = true;
+    joueurs[1] = new IA(this,PROFONDEUR);
+    joueurActif = joueurs[0];
+    plateau = new Plateau();
 }
 /**
  * méthode pour obtenir le numéro d'un joueur (utilisé pour ses pions par exemple)

@@ -48,9 +48,14 @@ public int obtenirCoup(){
  * @param p le plateau (la situation du jeu)
  * @return liste des coups jouables
  */
-public ArrayList<Integer> coupsPossibles(Plateau p){
+private ArrayList<Integer> coupsPossibles(Plateau p){
 	ArrayList<Integer> resultat = new ArrayList<Integer>();
-	for(int i =0;i<7;i++){
+	for(int i =3;i<7;i++){
+		if(p.hauteurColonne(i)<6){
+			resultat.add(i);
+		}
+	}
+	for (int i = 0;i<3;i++){
 		if(p.hauteurColonne(i)<6){
 			resultat.add(i);
 		}
@@ -66,7 +71,7 @@ public ArrayList<Integer> coupsPossibles(Plateau p){
  * @return score de la situation obtenue
  */
 
-public int scoreCoup(Plateau p, int c, int prof,Joueur actif){
+private int scoreCoup(Plateau p, int c, int prof,Joueur actif){
 	/*int j = 1;
 	if(partie.getJoueurActif().equals(partie.getJoueurs()[1])){
 		j = 2;
@@ -86,7 +91,7 @@ public int scoreCoup(Plateau p, int c, int prof,Joueur actif){
  * @param jref le joueur dont on calcule le jeu
  * @param jactif le joueur dont c'est le tour
  * @param prof profondeur de l'algorithme
- * @return
+ * @return le score maximal ou minimal (suivant le joueur)
  */
 private int minMax(Plateau p,Joueur jref,Joueur jactif, int prof ){
 	ArrayList<Integer> cps = coupsPossibles(p);

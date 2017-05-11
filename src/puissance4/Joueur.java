@@ -29,9 +29,7 @@ private Color couleur;
 public Color getCouleur() {
 	return couleur;
 }
-public boolean equals(Joueur j ){
-	return this.couleur.equals(j.getCouleur());
-}
+
 /**
  * Constructeur de joueur, fixant automatiquement sa couleur.
  */

@@ -186,7 +186,7 @@ public int hauteurColonne(int i){
 		int h = 0;
 		for (int j = 0; j<6;j++){
 			if(plateau[i][j]!=0){
-				h=j;
+				h=j+1;
 			}
 		}
 		return h;
@@ -244,13 +244,14 @@ public int nbPionsDiagGaD(int i, int j){
 	int k = i;
 	int l = j;
 	int caseDepart = plateau[i][j];
-	while(k>0&&caseDepart==plateau[k][l]&&l<6){
+	while(k>0&&l<6&&caseDepart==plateau[k][l]){
 		total++;
 		k--;
 		l++;
 	}
-	k = j;
-	while(k<7&&caseDepart==plateau[k][l]&&l>0){
+	k = i;
+	l = j;
+	while(k<7&&l>0&&caseDepart==plateau[k][l]){
 		total++;
 		k++;
 		l--;
@@ -268,13 +269,14 @@ public int nbPionsDiagDaG(int i, int j){
 	int k = i;
 	int l = j;
 	int caseDepart = plateau[i][j];
-	while(k<7&&caseDepart==plateau[k][l]&&l<6){
+	while(k<7&&l<6&&caseDepart==plateau[k][l]){
 		total++;
 		k++;
 		l++;
 	}
-	k = j;
-	while(k>0&&caseDepart==plateau[k][l]&&l>0){
+	k = i;
+	l = j;
+	while(k>0&&l>0&&caseDepart==plateau[k][l]){
 		total++;
 		k--;
 		l--;

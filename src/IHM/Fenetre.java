@@ -35,6 +35,10 @@ public class Fenetre extends JFrame {
 	
 	private Plateau plateau;
 	/**
+	 * le pannel du haut, sur lequel sont les boutons de colonne pour jouer
+	 */
+	private JPanel boutons;
+	/**
 	 * le panel central, dans lequel s'affiche le plateau
 	 */
 	private JPlateau jplateau;
@@ -97,6 +101,9 @@ public class Fenetre extends JFrame {
 		this.pack();
 		this.setVisible(true);
 	}
+	public JPanel getBoutons(){
+		return boutons;
+	}
 	public Jeu getPartie(){
 		return partie;
 	}
@@ -121,7 +128,7 @@ public class Fenetre extends JFrame {
 		// plateau, au centre
 		this.add(jplateau, BorderLayout.CENTER);
 		//ligne de boutons, en haut
-		JPanel boutons = new JPanel();
+		boutons = new JPanel();
 		boutons.setLayout(new GridLayout(1,7));
 		for (int i = 0;i<7;i++){
 			// on affiche les boutons avec le numéro normal, mais le bouton garde le numéro "tableau" i
@@ -181,7 +188,7 @@ class ActionBouton implements ActionListener{
 		//on joue le coup demandé
 		fen.getPartie().getPlateau().jouer(j, col);
 		//si le coup est joué, on continue
-		if(fen.getPartie().getPlateau().hauteurColonne(col)!=valeurPrec||valeurPrec==0){
+		if(fen.getPartie().getPlateau().hauteurColonne(col)!=valeurPrec){
 			//mise à jour de l'affichage
 			fen.repaint();
 			//panneau de victoire au cas où
@@ -191,8 +198,27 @@ class ActionBouton implements ActionListener{
 			}
 			//changement du joueur actif
 			fen.setJoueuractif(fen.getPartie().getAutreJoueur(fen.getJoueuractif()));
-			//mise à joura fficahge
+			//mise à jour affichage
 			fen.repaint();
+			//si c'est une partie solo, lancement du tour de l'IA
+			if(fen.getPartie().partieSolo()){
+				//on désactive les boutons?
+				fen.getBoutons().setEnabled(false);
+				//on cherche le coup, et on le joue. On suppose le coup joué dans tous les cas
+				fen.getPartie().getPlateau().jouer(2, fen.getPartie().getIA().obtenirCoup());
+				//test de victoire
+				if(fen.getPlateau().victoire()){
+					JOptionPane.showMessageDialog(fen, "victoire du joueur " + j);
+					System.exit(0);
+				}
+				//on change à nouveau le joueur actif
+				fen.setJoueuractif(fen.getPartie().getAutreJoueur(fen.getJoueuractif()));
+				//mise à jour affichage
+				fen.repaint();
+				//on réactive les boutons
+				fen.getBoutons().setEnabled(true);
+				
+			}
 		}
 	}
 	/*public void actionPerformed(ActionEvent e) {
