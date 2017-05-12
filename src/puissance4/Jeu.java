@@ -9,7 +9,7 @@ private Joueur[] joueurs = new Joueur[2];
 private Plateau plateau;
 private Joueur joueurActif;
 private boolean IA;
-private static int PROFONDEUR = 7;
+private static int PROFONDEUR = 5;
 public boolean partieSolo(){
 	return IA;
 }

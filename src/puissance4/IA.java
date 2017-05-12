@@ -33,9 +33,9 @@ public int obtenirCoup(){
 	Plateau plat = new Plateau (partie.getPlateau());
 	ArrayList<Integer> cps = coupsPossibles(plat);
 	int resultat = cps.get(0);
-	int meilleurScore = scoreCoup(plat,resultat,profondeur,partie.getJoueurActif());
+	int meilleurScore = scoreCoup(plat,resultat,profondeur,this,this);
 	for (int i = 1;i<cps.size();i++){
-		int score = scoreCoup(plat, cps.get(i),profondeur,partie.getJoueurActif());
+		int score = scoreCoup(plat, cps.get(i),profondeur,this,this);
 		if(score>meilleurScore){
 			resultat = cps.get(i);
 			meilleurScore = score;
@@ -71,19 +71,12 @@ private ArrayList<Integer> coupsPossibles(Plateau p){
  * @return score de la situation obtenue
  */
 
-private int scoreCoup(Plateau p, int c, int prof,Joueur actif){
-	/*int j = 1;
-	if(partie.getJoueurActif().equals(partie.getJoueurs()[1])){
-		j = 2;
-	}*/
+private int scoreCoup(Plateau p, int c, int prof,Joueur actif,Joueur jref){
 	Plateau plat = new Plateau(p);
-	int j = partie.getNumero(actif);
-	plat.jouer(j, c);
-	Joueur joueurRef = partie.getAutreJoueur(actif);
+	plat.jouer(partie.getNumero(actif), c);
 	if((plat.PlateauPlein()||plat.victoire())||prof==0){
-		
-		return evaluer(plat,joueurRef);
-	}else return minMax(plat,joueurRef, actif,prof-1);
+		return evaluer(plat,jref);
+	}else return minMax(plat,jref, partie.getAutreJoueur(actif),prof-1);
 }
 /**
  * méthode de l'algorithme minmax proprement dit
@@ -95,10 +88,9 @@ private int scoreCoup(Plateau p, int c, int prof,Joueur actif){
  */
 private int minMax(Plateau p,Joueur jref,Joueur jactif, int prof ){
 	ArrayList<Integer> cps = coupsPossibles(p);
-	int resultat = scoreCoup(p,cps.get(0),prof,jref);
-	int score = 0;
+	int resultat = scoreCoup(p,cps.get(0),prof,jref,jactif);
 	for (int i = 1; i<cps.size();i++){
-		score = scoreCoup(p,cps.get(i),prof,jref);
+		int score = scoreCoup(p,cps.get(i),prof,jref,jactif);
 		if(jactif.equals(jref)){
 			resultat = Math.max(resultat,score);
 		}else{
@@ -144,6 +136,8 @@ private int score(Plateau p, Joueur joueur){
 private int scoreAlignement(int nb){
 	int res = 0;
 	switch(nb){
+	case 0 : res = 0;
+	break;
 	case 1 : res =1;
 	break;
 	case 2: res = 5;
@@ -151,6 +145,8 @@ private int scoreAlignement(int nb){
 	case 3 : res = 50;
 	break;
 	case 4 : res =1000;
+	break;
+	default : res = 1000;
 	break;
 	}
 	return res;

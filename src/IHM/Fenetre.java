@@ -208,7 +208,7 @@ class ActionBouton implements ActionListener{
 				fen.getPartie().getPlateau().jouer(2, fen.getPartie().getIA().obtenirCoup());
 				//test de victoire
 				if(fen.getPlateau().victoire()){
-					JOptionPane.showMessageDialog(fen, "victoire du joueur " + j);
+					JOptionPane.showMessageDialog(fen, "victoire du joueur " + fen.getPartie().getNumero(fen.getPartie().getIA()));
 					System.exit(0);
 				}
 				//on change à nouveau le joueur actif
@@ -221,25 +221,7 @@ class ActionBouton implements ActionListener{
 			}
 		}
 	}
-	/*public void actionPerformed(ActionEvent e) {
-		int j = 1;
-		//System.out.println("test");
-		if(fen.getJoueuractif().equals(fen.getPartie().getJoueurs()[1])){
-			j = 2;
-		}
-		fen.getPartie().getPlateau().jouer(j, bouton.getNumero());
-		fen.repaint();
-		if(fen.getPlateau().victoire()){
-			JOptionPane.showMessageDialog(fen, "victoire du joueur " + j);
-			System.exit(0);
-		}
-		if(fen.getJoueuractif().equals(fen.getPartie().getJoueurs()[1])){
-			fen.setJoueuractif(fen.getPartie().getJoueurs()[0]);
-		}else fen.setJoueuractif(fen.getPartie().getJoueurs()[1]);
-		fen.repaint();
-		fen.getInfos().getJoueur().setBackground(fen.getJoueuractif().getCouleur());
-		fen.getInfos().repaint();
-	}*/
+	
 	
 	
 }

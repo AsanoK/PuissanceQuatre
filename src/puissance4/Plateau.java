@@ -201,11 +201,11 @@ public int nbPionsVerticaux(int i, int j){
 	int total = 0;
 	int k = j;
 	int caseDepart =plateau[i][j];
-	while(k>0&&caseDepart==plateau[i][k]){
+	while(k>=0&&caseDepart==plateau[i][k]){
 		total++;
 		k--;
 	}
-	k = j;
+	k = j+1;
 	while(k<6&&caseDepart==plateau[i][k]){
 		total++;
 		k++;
@@ -222,11 +222,11 @@ public int nbPionsHorizontaux(int i, int j){
 	int total = 0;
 	int k = i;
 	int caseDepart = plateau[i][j];
-	while(k>0&&caseDepart==plateau[k][j]){
+	while(k>=0&&caseDepart==plateau[k][j]){
 		total++;
 		k--;
 	}
-	k = j;
+	k = i+1;
 	while(k<7&&caseDepart==plateau[k][j]){
 		total++;
 		k++;
@@ -244,14 +244,14 @@ public int nbPionsDiagGaD(int i, int j){
 	int k = i;
 	int l = j;
 	int caseDepart = plateau[i][j];
-	while(k>0&&l<6&&caseDepart==plateau[k][l]){
+	while(k>=0&&l<6&&caseDepart==plateau[k][l]){
 		total++;
 		k--;
 		l++;
 	}
-	k = i;
-	l = j;
-	while(k<7&&l>0&&caseDepart==plateau[k][l]){
+	k = i+1;
+	l = j-1;
+	while(k<7&&l>=0&&caseDepart==plateau[k][l]){
 		total++;
 		k++;
 		l--;
@@ -274,13 +274,22 @@ public int nbPionsDiagDaG(int i, int j){
 		k++;
 		l++;
 	}
-	k = i;
-	l = j;
-	while(k>0&&l>0&&caseDepart==plateau[k][l]){
+	k = i-1;
+	l = j-1;
+	while(k>=0&&l>=0&&caseDepart==plateau[k][l]){
 		total++;
 		k--;
 		l--;
 	}
 	return total;
+}
+public boolean coupGagnant(int coup, int joueur){
+	boolean gagnant = false;
+	Plateau plat_copie = new Plateau(this);
+	plat_copie.jouer(joueur, coup);
+	if(plat_copie.victoire()){
+		gagnant = true;
+	}
+	return gagnant;
 }
 }
